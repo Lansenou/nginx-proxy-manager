@@ -38,6 +38,8 @@ EXPOSE 80 81 443
 
 COPY backend       /app
 COPY frontend/dist /app/frontend
+COPY defaults /defaults
+COPY crowdsec_openresty.conf /etc/nginx/conf.d/crowdsec_openresty.conf
 
 WORKDIR /app
 RUN yarn install \
