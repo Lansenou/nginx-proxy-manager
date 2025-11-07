@@ -23,7 +23,7 @@ ENV SUPPRESS_NO_CONFIG_WARNING=1 \
 	NPM_BUILD_COMMIT="${BUILD_COMMIT}" \
 	NPM_BUILD_DATE="${BUILD_DATE}" \
 	NODE_OPTIONS="--openssl-legacy-provider"
-
+	
 RUN echo "fs.file-max = 65535" > /etc/sysctl.conf \
 	&& apt-get update \
 	&& apt-get install -y --no-install-recommends jq logrotate \
@@ -38,8 +38,6 @@ EXPOSE 80 81 443
 
 COPY backend       /app
 COPY frontend/dist /app/frontend
-COPY defaults /defaults
-COPY crowdsec_openresty.conf /etc/nginx/conf.d/crowdsec_openresty.conf
 
 WORKDIR /app
 RUN yarn install \
@@ -52,6 +50,9 @@ COPY --from=testca /home/step/certs/root_ca.crt /etc/ssl/certs/NginxProxyManager
 # Remove frontend service not required for prod, dev nginx config as well
 RUN rm -rf /etc/s6-overlay/s6-rc.d/user/contents.d/frontend /etc/nginx/conf.d/dev.conf \
 	&& chmod 644 /etc/logrotate.d/nginx-proxy-manager
+
+# crowdsec bouncer
+RUN /tmp/install-crowdsec_openresty_bouncer
 
 VOLUME [ "/data" ]
 ENTRYPOINT [ "/init" ]
