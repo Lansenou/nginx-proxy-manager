@@ -4,7 +4,7 @@
 # This file assumes that the frontend has been built using ./scripts/frontend-build
 
 FROM nginxproxymanager/testca AS testca
-FROM nginxproxymanager/nginx-full:github-pr-8-certbot-node
+FROM lansje/nginx-full:github-pr-8-certbot-node
 
 ARG TARGETPLATFORM
 ARG BUILD_VERSION
