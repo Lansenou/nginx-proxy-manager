@@ -7,7 +7,7 @@ on:
     inputs: {}
   push:
     branches:
-      - crowdsec
+      - develop-crowdsec
 
 jobs:
   jenkins-run:
@@ -19,7 +19,7 @@ jobs:
       - name: Run build
         run: |
           TAG=$GITHUB_REF_NAME
-          if [ "$TAG" = "crowdsec" ]; then
+          if [ "$TAG" = "develop-crowdsec" ]; then
             TAG="latest"
           fi
           echo Pushing to image: nginx-full:$TAG
