@@ -1,0 +1,26 @@
+name: Run Build
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # every day
+  workflow_dispatch:
+    inputs: {}
+  push:
+    branches:
+      - crowdsec
+
+jobs:
+  jenkins-run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Log in to Docker Hub
+        run: echo ${{ secrets.DOCKER_PASS }} | docker login --username ${{ secrets.DOCKER_USER }} --password-stdin
+      - name: Run build
+        run: |
+          TAG=$GITHUB_REF_NAME
+          if [ "$TAG" = "crowdsec" ]; then
+            TAG="latest"
+          fi
+          echo Pushing to image: nginx-full:$TAG
+          ./scripts/buildx --push -t nginx-full:$TAG
