@@ -3,6 +3,8 @@ name: Run Build
 on:
   workflow_dispatch:
     inputs: {}
+  schedule:
+    - cron: '0 0 * * *' # every day
   push:
     branches:
       - develop-crowdsec
