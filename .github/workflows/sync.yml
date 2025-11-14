@@ -11,10 +11,9 @@ jobs:
       contents: write
     steps:
       - name: Checkout fork
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           ref: develop-crowdsec
-          persist-credentials: false
           fetch-depth: 0
 
       - name: Add upstream
@@ -24,9 +23,6 @@ jobs:
           git remote add upstream https://github.com/NginxProxyManager/nginx-proxy-manager.git
           git fetch upstream master
           git merge upstream/master --allow-unrelated-histories --no-edit || true
-
-      - name: Push changes
-        uses: ad-m/github-push-action@v0.6.0
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: develop-crowdsec
+          git add .
+          git commit -m "Merge with NginxProxyManager/master"
+          git push
