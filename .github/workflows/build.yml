@@ -23,5 +23,5 @@ jobs:
             TAG="latest"
           fi
           export BUILD_VERSION="$(< .version)"
-          echo Pushing to image: lansje/nginx-proxy-manager:$TAG
+          echo "Pushing (version ${BUILD_VERSION}) to image: lansje/nginx-proxy-manager:$TAG"
           ./scripts/buildx --push -t lansje/nginx-proxy-manager:$TAG
