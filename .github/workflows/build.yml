@@ -22,5 +22,6 @@ jobs:
           if [ "$TAG" = "develop-crowdsec" ]; then
             TAG="latest"
           fi
+          export BUILD_VERSION="$(< .version)"
           echo Pushing to image: lansje/nginx-proxy-manager:$TAG
           ./scripts/buildx --push -t lansje/nginx-proxy-manager:$TAG
