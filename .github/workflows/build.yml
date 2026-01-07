@@ -24,4 +24,8 @@ jobs:
           fi
           export BUILD_VERSION="$(< .version)"
           echo "Pushing (version ${BUILD_VERSION}) to image: lansje/nginx-proxy-manager:$TAG"
-          ./scripts/buildx --push -t lansje/nginx-proxy-manager:$TAG
+
+          npm --prefix backend version "$BUILD_VERSION" --no-git-tag-version --allow-same-version
+          npm --prefix frontend version "$BUILD_VERSION" --no-git-tag-version --allow-same-version
+          
+          ./scripts/buildx --push -t lansje/nginx-proxy-manager:$TAG -t lansje/nginx-proxy-manager:$BUILD_VERSION
