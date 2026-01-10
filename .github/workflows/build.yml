@@ -22,10 +22,22 @@ jobs:
           if [ "$TAG" = "develop-crowdsec" ]; then
             TAG="latest"
           fi
+
           export BUILD_VERSION="$(< .version)"
-          echo "Pushing (version ${BUILD_VERSION}) to image: lansje/nginx-proxy-manager:$TAG"
+          echo "Pushing (version ${BUILD_VERSION}) to image: lansje/nginx-proxy-manager"
 
           npm --prefix backend version "$BUILD_VERSION" --no-git-tag-version --allow-same-version
           npm --prefix frontend version "$BUILD_VERSION" --no-git-tag-version --allow-same-version
-          
-          ./scripts/buildx --push -t lansje/nginx-proxy-manager:$TAG -t lansje/nginx-proxy-manager:$BUILD_VERSION
+
+          MAJOR="${BUILD_VERSION%%.*}"
+          MINOR="${BUILD_VERSION%.*}"
+
+          TAGS="-t lansje/nginx-proxy-manager:$BUILD_VERSION"
+          TAGS="$TAGS -t lansje/nginx-proxy-manager:$MINOR"
+          TAGS="$TAGS -t lansje/nginx-proxy-manager:$MAJOR"
+
+          if [ "$TAG" = "latest" ]; then
+            TAGS="$TAGS -t lansje/nginx-proxy-manager:latest"
+          fi
+
+          ./scripts/buildx --push $TAGS
