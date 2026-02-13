@@ -25,8 +25,8 @@ jobs:
           git fetch upstream master
           git merge upstream/master --allow-unrelated-histories --no-edit
           # Remove workflow changes introduced by upstream
-          git reset HEAD .github/workflows/ || true
-          git checkout -- .github/workflows/ || true
+          git reset HEAD .github
+          git checkout -- .github
           git add .
           git commit -m "Merge with NginxProxyManager/master" || true
           git push
