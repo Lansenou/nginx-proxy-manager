@@ -8,12 +8,19 @@
 
 const allLocales = [
 	["en", "en-US"],
-	["es", "es-ES"],
 	["de", "de-DE"],
+	["es", "es-ES"],
+	["it", "it-IT"],
+	["ja", "ja-JP"],
+	["nl", "nl-NL"],
+	["pl", "pl-PL"],
 	["ru", "ru-RU"],
 	["sk", "sk-SK"],
+	["vi", "vi-VN"],
 	["zh", "zh-CN"],
-	["pl", "pl-PL"],
+	["ko", "ko-KR"],
+	["bg", "bg-BG"],
+	["id", "id-ID"],
 ];
 
 const ignoreUnused = [
