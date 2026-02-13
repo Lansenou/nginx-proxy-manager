@@ -22,7 +22,10 @@ jobs:
           git config --global user.name "Gitlab Runner"
           git remote add upstream https://github.com/NginxProxyManager/nginx-proxy-manager.git
           git fetch upstream master
-          git merge upstream/master --allow-unrelated-histories --no-edit || true
+          git merge upstream/master --allow-unrelated-histories --no-edit
+          # Remove workflow changes introduced by upstream
+          git reset HEAD .github/workflows/ || true
+          git checkout -- .github/workflows/ || true
           git add .
           git commit -m "Merge with NginxProxyManager/master" || true
-          git push || true
+          git push
