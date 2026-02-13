@@ -10,7 +10,6 @@ jobs:
     permissions:
       contents: write
       actions: write
-      workflows: write
     steps:
       - name: Checkout fork
         uses: actions/checkout@v5
